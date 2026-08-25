@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מרכז הכלים — Flight Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#F4EEE1;
+  --cream-2:#EDE4D3;
+  --ink:#2B2620;
+  --ink-soft:#5A5348;
+  --gold:#C69A4A;
+  --gold-deep:#A87C2E;
+  --line:#DDD2BC;
+  --card:#FBF7EE;
+  --shadow:rgba(43,38,32,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:'Heebo',system-ui,sans-serif;
+  min-height:100vh;
+  line-height:1.5;
+  padding:clamp(20px,5vw,64px) clamp(16px,5vw,48px);
+}
+.wrap{max-width:820px;margin:0 auto}
+
+header{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;
+  margin-bottom:34px;
+}
+h1{
+  font-size:clamp(1.9rem,5vw,2.7rem);
+  font-weight:700;letter-spacing:-.01em;line-height:1.05;
+}
+.utc{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.85rem;color:var(--ink-soft);
+  direction:ltr;text-align:left;
+  padding:6px 12px;border:1px solid var(--line);border-radius:8px;
+  background:var(--card);white-space:nowrap;
+}
+.utc b{color:var(--gold-deep);font-weight:600}
+
+.sec-label{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold-deep);direction:ltr;
+  display:flex;align-items:center;gap:12px;
+  margin:0 0 16px;
+}
+.sec-label::after{content:"";flex:1;height:1px;background:var(--line)}
+.sec-label.second{margin-top:40px}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+.card{
+  position:relative;
+  display:flex;flex-direction:column;gap:12px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:22px 20px;
+  text-decoration:none;color:inherit;
+  transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
+  overflow:hidden;
+}
+.card::before{
+  content:"";position:absolute;inset:0 auto 0 0;width:3px;
+  background:var(--gold);transform:scaleY(0);transform-origin:top;
+  transition:transform .2s ease;
+}
+.card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 26px var(--shadow);
+  border-color:var(--gold);
+}
+.card:hover::before{transform:scaleY(1)}
+.card:focus-visible{outline:2px solid var(--gold-deep);outline-offset:3px}
+
+.card-top{display:flex;align-items:center;gap:14px}
+.icon{
+  width:50px;height:50px;flex:none;
+  border-radius:12px;
+  background:var(--cream-2);
+  display:grid;place-items:center;
+  border:1px solid var(--line);
+  overflow:hidden;
+}
+.icon img{width:100%;height:100%;object-fit:cover}
+.icon .glyph{font-size:1.45rem}
+.tag{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--gold-deep);direction:ltr;
+  margin-inline-start:auto;
+  border:1px solid var(--line);border-radius:20px;
+  padding:3px 9px;white-space:nowrap;
+}
+
+/* consistent 3-line body: bold header → english → hebrew */
+.card-body{display:flex;flex-direction:column;gap:4px}
+.card h2{font-size:1.1rem;font-weight:700;line-height:1.2}
+.card .en{
+  font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+  color:var(--gold-deep);font-weight:500;direction:ltr;letter-spacing:.01em;
+  text-align:right;
+}
+.card p{font-size:.85rem;color:var(--ink-soft);line-height:1.45;margin-top:2px}
+
+.card .go{
+  margin-top:auto;
+  font-family:'Heebo',sans-serif;font-weight:500;
+  font-size:.82rem;color:var(--gold-deep);
+  display:flex;align-items:center;gap:6px;
+}
+.go .arr{transition:transform .18s ease;font-family:'IBM Plex Mono',monospace}
+.card:hover .go .arr{transform:translateX(-4px)}
+
+.grid.external .card{padding:18px 18px}
+
+footer{
+  margin-top:44px;padding-top:20px;
+  border-top:1px solid var(--line);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.72rem;color:var(--ink-soft);
+  direction:ltr;text-align:center;letter-spacing:.06em;
+}
+footer a{color:var(--gold-deep);text-decoration:none}
+
+@media (max-width:560px){
+  .grid,.grid.external{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>מרכז הכלים</h1>
+    <div class="utc" id="utc">--:-- UTC</div>
+  </header>
+
+  <p class="sec-label">Built by ELIGRT</p>
+  <main class="grid" id="grid-own"></main>
+
+  <p class="sec-label second">External links</p>
+  <main class="grid external" id="grid-ext"></main>
+
+  <footer>built by <a href="https://eligrt.github.io">ELIGRT</a></footer>
+</div>
+
+<script>
+const OWN = [
+  {
+    title:"AirCheck",
+    en:"The checklist on top of the checklist",
+    desc:"כל הדברים הקטנים והאישיים שחייבים לזכור אבל אין להם מקום בבד\"ח.",
+    url:"https://eligrt.github.io/AirCheck/AirCheck_RD.html",
+    icon:"https://eligrt.github.io/AirCheck/AirCheck_logo_RD.png",
+    glyph:"✈", tag:"CHECKLIST"
+  },
+  {
+    title:"Weight & Balance",
+    en:"AirBalance — Texan 570 & Harmony",
+    desc:"מחשבון משקל ואיזון לאז\"מ.",
+    url:"https://eligrt.github.io/AirBalance/AirBalance.html",
+    icon:"", glyph:"⚖", tag:"CALC"
+  },
+  {
+    title:"AirLog",
+    en:"Where aviation meets Google Sheet",
+    desc:"הפיכת הלוגבוק האישי שיושב ב-Google Sheet לאפליקציית לוגבוק מתקדמת.",
+    url:"https://eligrt.github.io/AirLog/AirLog.html",
+    icon:"https://eligrt.github.io/AirLog/icon-512.png",
+    glyph:"📖", tag:"LOGBOOK"
+  },
+  {
+    title:"Merhav FPL",
+    en:"Purple routes · AZAM",
+    desc:"הגשת תוכנית טיסת מרחב בנתיבי אז\"ם דרומה לבאר שבע (\"נתיב מיוחד\").",
+    url:"https://eligrt.github.io/MERHAV_fpl/PURPLE_Routes_AZAM.html",
+    icon:"", glyph:"🟣", tag:"FPL"
+  }
+];
+
+const EXT = [
+  {
+    title:"הגשת תוכנית טיסה",
+    en:"fpl.co.il",
+    url:"https://fpl.co.il/",
+    glyph:"📋", tag:"FPL"
+  },
+  {
+    title:"בדיקת נוטמים",
+    en:"notam · Lior Ben-Horin",
+    url:"https://notam.liorbenhorin.xyz/",
+    glyph:"⚠", tag:"NOTAM"
+  }
+];
+
+function cardHTML(t){
+  const hasImg = t.icon && t.icon.length;
+  return `
+  <a class="card" href="${t.url}" target="_blank" rel="noopener">
+    <div class="card-top">
+      <span class="icon">
+        ${hasImg?`<img src="${t.icon}" alt="" onerror="this.style.display='none';this.parentNode.querySelector('.glyph').style.display='block'">`:''}
+        <span class="glyph"${hasImg?' style="display:none"':''}>${t.glyph||'✈'}</span>
+      </span>
+      <span class="tag">${t.tag}</span>
+    </div>
+    <div class="card-body">
+      <h2>${t.title}</h2>
+      ${t.en?`<span class="en">${t.en}</span>`:''}
+      ${t.desc?`<p>${t.desc}</p>`:''}
+    </div>
+    <span class="go"><span class="arr">←</span> פתיחה</span>
+  </a>`;
+}
+
+document.getElementById('grid-own').innerHTML = OWN.map(cardHTML).join('');
+document.getElementById('grid-ext').innerHTML = EXT.map(cardHTML).join('');
+
+function tick(){
+  const d=new Date();const p=n=>String(n).padStart(2,'0');
+  document.getElementById('utc').innerHTML =
+    `<b>${p(d.getUTCHours())}:${p(d.getUTCMinutes())}</b>:${p(d.getUTCSeconds())} UTC`;
+}
+tick();setInterval(tick,1000);
+</script>
+</body>
+</html>
