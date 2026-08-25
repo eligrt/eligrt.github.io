@@ -32,23 +32,22 @@ body{
 .wrap{max-width:820px;margin:0 auto}
 
 header{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:16px;flex-wrap:wrap;
-  margin-bottom:34px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:52px;
 }
+.brand{text-align:center}
 h1{
-  font-size:clamp(1.9rem,5vw,2.7rem);
-  font-weight:700;letter-spacing:-.01em;line-height:1.05;
+  font-size:clamp(1.8rem,5vw,2.6rem);
+  font-weight:800;letter-spacing:.02em;line-height:1.05;
+  direction:ltr;
 }
-.utc{
+.tagline{
   font-family:'IBM Plex Mono',monospace;
-  font-size:.85rem;color:var(--ink-soft);
-  direction:ltr;text-align:left;
-  padding:6px 12px;border:1px solid var(--line);border-radius:8px;
-  background:var(--card);white-space:nowrap;
+  font-size:clamp(.66rem,2vw,.74rem);
+  letter-spacing:.34em;text-transform:uppercase;
+  color:var(--gold-deep);direction:ltr;
+  margin-top:13px;padding-inline-start:.34em;
 }
-.utc b{color:var(--gold-deep);font-weight:600}
-
 .sec-label{
   font-family:'IBM Plex Mono',monospace;
   font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
@@ -164,17 +163,19 @@ footer a{color:var(--gold-deep);text-decoration:none}
 <body>
 <div class="wrap">
   <header>
-    <h1>מרכז הכלים</h1>
-    <div class="utc" id="utc">--:-- UTC</div>
+    <div class="brand">
+      <h1>LSA TOOLBOX</h1>
+      <div class="tagline">Flight Utilities</div>
+    </div>
   </header>
 
-  <p class="sec-label">Built by ELIGRT</p>
+  <p class="sec-label">ELIGRT's Projects</p>
   <main class="grid" id="grid-own"></main>
 
   <p class="sec-label second">External links</p>
   <main class="grid external" id="grid-ext"></main>
 
-  <footer>v1.05</footer>
+  <footer>v1.12</footer>
 </div>
 
 <script>
@@ -254,13 +255,6 @@ function cardHTML(t){
 
 document.getElementById('grid-own').innerHTML = OWN.map(cardHTML).join('');
 document.getElementById('grid-ext').innerHTML = EXT.map(cardHTML).join('');
-
-function tick(){
-  const d=new Date();const p=n=>String(n).padStart(2,'0');
-  document.getElementById('utc').innerHTML =
-    `<b>${p(d.getUTCHours())}:${p(d.getUTCMinutes())}</b>:${p(d.getUTCSeconds())} UTC`;
-}
-tick();setInterval(tick,1000);
 </script>
 </body>
 </html>
