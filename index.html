@@ -130,6 +130,14 @@ h1{
 .grid.external .card{padding:18px 18px}
 
 footer{
+  margin-top:40px;padding-top:18px;
+  border-top:1px solid var(--line);
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.68rem;color:var(--ink-soft);
+  direction:ltr;text-align:center;letter-spacing:.14em;opacity:.7;
+}
+
+footer{
   margin-top:44px;padding-top:20px;
   border-top:1px solid var(--line);
   font-family:'IBM Plex Mono',monospace;
@@ -139,7 +147,16 @@ footer{
 footer a{color:var(--gold-deep);text-decoration:none}
 
 @media (max-width:560px){
-  .grid,.grid.external{grid-template-columns:1fr}
+  body{padding:24px 14px}
+  .grid,.grid.external{gap:11px}
+  .card,.grid.external .card{padding:15px 13px;gap:9px;border-radius:12px}
+  .icon{width:40px;height:40px;border-radius:10px}
+  .icon .glyph{font-size:1.2rem}
+  .tag{font-size:.55rem;padding:2px 7px;letter-spacing:.1em}
+  .card h2{font-size:.95rem}
+  .card .en{font-size:.62rem}
+  .card p{font-size:.76rem}
+  .card .go{font-size:.75rem}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -156,6 +173,8 @@ footer a{color:var(--gold-deep);text-decoration:none}
 
   <p class="sec-label second">External links</p>
   <main class="grid external" id="grid-ext"></main>
+
+  <footer>v1.01</footer>
 </div>
 
 <script>
