@@ -135,6 +135,7 @@ h1{
   overflow:hidden;
 }
 .icon img{width:100%;height:100%;object-fit:cover}
+.icon img.contain{object-fit:contain;padding:6px}
 .icon .glyph{font-size:1.45rem}
 .tag{
   font-family:'IBM Plex Mono',monospace;
@@ -219,7 +220,7 @@ footer a{color:var(--gold-deep);text-decoration:none}
   <p class="sec-label second" id="externalSection">External links</p>
   <main class="grid external" id="grid-ext"></main>
 
-  <footer>v1.27</footer>
+  <footer>v1.28</footer>
 </div>
 
 <script>
@@ -252,7 +253,7 @@ const OWN = [
     en:"Purple routes · AZAM",
     desc:"הגשת תוכנית ל\"טיסת מרחב\" בנתיבי אז\"ם דרומית לבאר שבע באמצ\"ש (\"נתיב סגול\").",
     url:"https://eligrt.github.io/MERHAV_fpl/PURPLE_Routes_AZAM.html",
-    icon:"https://eligrt.github.io/merhav_icon.png", glyph:"🟣", tag:"FPL"
+    icon:"https://eligrt.github.io/merhav_icon.png", glyph:"🟣", tag:"FPL", fit:"contain"
   }
 ];
 
@@ -283,7 +284,7 @@ function cardHTML(t){
   <a class="card" href="${t.url}" target="_blank" rel="noopener">
     <div class="card-top">
       <span class="icon">
-        ${hasImg?`<img src="${t.icon}" alt="" onerror="this.style.display='none';this.parentNode.querySelector('.glyph').style.display='block'">`:''}
+        ${hasImg?`<img class="${t.fit==='contain'?'contain':''}" src="${t.icon}" alt="" onerror="this.style.display='none';this.parentNode.querySelector('.glyph').style.display='block'">`:''}
         <span class="glyph"${hasImg?' style="display:none"':''}>${t.glyph||'✈'}</span>
       </span>
       <span class="tag">${t.tag}</span>
