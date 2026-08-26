@@ -71,20 +71,30 @@ h1{
 .sec-label::after{content:"";flex:1;height:1px;background:var(--line)}
 .sec-label.second{margin-top:30px}
 
-.scroll-cue{
-  position:fixed;left:50%;transform:translateX(-50%);bottom:14px;
-  display:flex;flex-direction:column;align-items:center;gap:1px;
-  font-family:'IBM Plex Mono',monospace;font-size:.6rem;
-  letter-spacing:.16em;text-transform:uppercase;
-  color:var(--gold-deep);pointer-events:none;
-  opacity:.9;transition:opacity .4s ease;z-index:20;
-  background:var(--cream);padding:7px 16px 5px;border-radius:20px;
-  border:1px solid var(--line);box-shadow:0 4px 14px rgba(43,38,32,.1);
+.scroll-fade{
+  position:fixed;left:0;right:0;bottom:0;height:96px;
+  pointer-events:none;z-index:15;
+  background:linear-gradient(to bottom, rgba(244,238,225,0), var(--cream));
+  opacity:1;transition:opacity .4s ease;
 }
-.scroll-cue .chev{font-size:1rem;line-height:1;animation:bob 1.6s ease-in-out infinite}
-.scroll-cue.hide{opacity:0}
-@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
-@media (prefers-reduced-motion:reduce){.scroll-cue .chev{animation:none}}
+.scroll-btn{
+  position:fixed;left:50%;bottom:16px;
+  width:44px;height:44px;border-radius:50%;
+  background:var(--card);border:1px solid var(--line);
+  display:grid;place-items:center;cursor:pointer;z-index:16;
+  box-shadow:0 4px 14px rgba(43,38,32,.12);
+  opacity:1;transition:opacity .4s ease,transform .12s ease,box-shadow .18s ease;
+  transform:translateX(-50%);
+  animation:bob 1.8s ease-in-out infinite;
+  -webkit-tap-highlight-color:transparent;padding:0;
+}
+.scroll-btn svg{width:20px;height:20px;stroke:var(--gold-deep);stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.scroll-btn:hover{border-color:var(--gold);box-shadow:0 6px 18px rgba(43,38,32,.16)}
+.scroll-btn:active{animation:none;transform:translateX(-50%) scale(.92)}
+.scroll-btn:focus-visible{outline:2px solid var(--gold-deep);outline-offset:3px}
+.scroll-fade.hide,.scroll-btn.hide{opacity:0;pointer-events:none}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(4px)}}
+@media (prefers-reduced-motion:reduce){.scroll-btn{animation:none}}
 
 .grid{
   display:grid;
@@ -198,18 +208,18 @@ footer a{color:var(--gold-deep);text-decoration:none}
     </div>
   </header>
 
-  <div class="scroll-cue" id="scrollCue" aria-hidden="true">
-    <span>עוד למטה</span>
-    <span class="chev">˅</span>
-  </div>
+  <div class="scroll-fade" id="scrollFade" aria-hidden="true"></div>
+  <button class="scroll-btn" id="scrollBtn" aria-label="גלול למטה">
+    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+  </button>
 
   <p class="sec-label">ELIGRT's Projects</p>
   <main class="grid" id="grid-own"></main>
 
-  <p class="sec-label second">External links</p>
+  <p class="sec-label second" id="externalSection">External links</p>
   <main class="grid external" id="grid-ext"></main>
 
-  <footer>v1.21</footer>
+  <footer>v1.24</footer>
 </div>
 
 <script>
@@ -290,15 +300,23 @@ function cardHTML(t){
 document.getElementById('grid-own').innerHTML = OWN.map(cardHTML).join('');
 document.getElementById('grid-ext').innerHTML = EXT.map(cardHTML).join('');
 
-// hide scroll cue after any scroll (and if page isn't tall enough to scroll)
-const cue = document.getElementById('scrollCue');
-function checkCue(){
-  if (window.scrollY > 40 || (window.innerHeight + window.scrollY) >= document.body.scrollHeight - 4){
-    cue.classList.add('hide');
-  }
+// bottom fade + circular scroll button
+const sFade = document.getElementById('scrollFade');
+const sBtn = document.getElementById('scrollBtn');
+function updateCue(){
+  const atBottom = (window.innerHeight + window.scrollY) >= document.body.scrollHeight - 8;
+  const fits = document.body.scrollHeight <= window.innerHeight + 8;
+  const hide = atBottom || fits;
+  sFade.classList.toggle('hide', hide);
+  sBtn.classList.toggle('hide', hide);
 }
-window.addEventListener('scroll', ()=>cue.classList.add('hide'), {passive:true});
-window.addEventListener('load', ()=>{ if(document.body.scrollHeight <= window.innerHeight+8) cue.classList.add('hide'); });
+sBtn.addEventListener('click', ()=>{
+  window.scrollBy({top: window.innerHeight * 0.8, behavior:'smooth'});
+});
+window.addEventListener('scroll', updateCue, {passive:true});
+window.addEventListener('resize', updateCue);
+window.addEventListener('load', updateCue);
+updateCue();
 </script>
 </body>
 </html>
