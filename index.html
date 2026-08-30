@@ -8,8 +8,8 @@
 <meta property="og:title" content="LSA Toolbox — Flight Utilities">
 <meta property="og:description" content="ELIGRT's aviation tools — checklists, weight & balance, logbook, and flight planning.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://eligrt.github.io/">
-<meta property="og:image" content="https://eligrt.github.io/og-image.png">
+<meta property="og:url" content="https://eligrt.github.io/LSA-Toolbox/">
+<meta property="og:image" content="https://eligrt.github.io/LSA-Toolbox/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -103,11 +103,11 @@ h1{
 }
 .card{
   position:relative;
-  display:flex;flex-direction:column;gap:12px;
+  display:flex;flex-direction:column;gap:10px;
   background:var(--card);
   border:1px solid var(--line);
   border-radius:14px;
-  padding:22px 20px;
+  padding:18px 18px;
   text-decoration:none;color:inherit;
   transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;
   overflow:hidden;
@@ -125,10 +125,10 @@ h1{
 .card:hover::before{transform:scaleY(1)}
 .card:focus-visible{outline:2px solid var(--gold-deep);outline-offset:3px}
 
-.card-top{display:flex;align-items:center;gap:14px}
+.card-top{display:flex;align-items:center;gap:12px}
 .icon{
-  width:50px;height:50px;flex:none;
-  border-radius:12px;
+  width:44px;height:44px;flex:none;
+  border-radius:11px;
   background:var(--cream-2);
   display:grid;place-items:center;
   border:1px solid var(--line);
@@ -136,36 +136,31 @@ h1{
 }
 .icon img{width:100%;height:100%;object-fit:cover}
 .icon img.contain{object-fit:contain;padding:2px}
-.icon .glyph{font-size:1.45rem}
-.tag{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--gold-deep);direction:ltr;
-  margin-inline-start:auto;
-  border:1px solid var(--line);border-radius:20px;
-  padding:3px 9px;white-space:nowrap;
-}
+.icon .glyph{font-size:1.3rem}
 
-/* consistent 3-line body: bold header → english → hebrew */
-.card-body{display:flex;flex-direction:column;gap:4px}
-.card h2{font-size:1.1rem;font-weight:700;line-height:1.2}
+/* title sits inline with the icon, at icon height */
+.card-head{
+  display:flex;flex-direction:column;gap:1px;min-width:0;flex:1;
+}
+.card h2{font-size:1.02rem;font-weight:600;line-height:1.15}
+.card h2.ltr{direction:ltr;text-align:right}
 .card .en{
-  font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+  font-family:'IBM Plex Mono',monospace;font-size:.68rem;
   color:var(--gold-deep);font-weight:500;direction:ltr;letter-spacing:.01em;
   text-align:right;
 }
-.card p{font-size:.85rem;color:var(--ink-soft);line-height:1.45;margin-top:2px}
+.card p{font-size:.82rem;color:var(--ink-soft);line-height:1.4}
 
+/* minimalist affordance: corner arrow, no label */
 .card .go{
-  margin-top:auto;
-  font-family:'Heebo',sans-serif;font-weight:500;
-  font-size:.82rem;color:var(--gold-deep);
-  display:flex;align-items:center;gap:6px;
+  position:absolute;top:14px;left:16px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.95rem;color:var(--line);
+  transition:transform .18s ease,color .18s ease;
 }
-.go .arr{transition:transform .18s ease;font-family:'IBM Plex Mono',monospace}
-.card:hover .go .arr{transform:translateX(-4px)}
+.card:hover .go{color:var(--gold-deep);transform:translateX(-3px)}
 
-.grid.external .card{padding:18px 18px}
+.grid.external .card{padding:16px 18px}
 
 footer{
   margin-top:40px;padding-top:18px;
@@ -187,14 +182,13 @@ footer a{color:var(--gold-deep);text-decoration:none}
 @media (max-width:560px){
   body{padding:24px 14px}
   .grid,.grid.external{gap:11px}
-  .card,.grid.external .card{padding:15px 13px;gap:9px;border-radius:12px}
-  .icon{width:40px;height:40px;border-radius:10px}
-  .icon .glyph{font-size:1.2rem}
-  .tag{font-size:.55rem;padding:2px 7px;letter-spacing:.1em}
-  .card h2{font-size:.95rem}
-  .card .en{font-size:.62rem}
-  .card p{font-size:.76rem}
-  .card .go{font-size:.75rem}
+  .card,.grid.external .card{padding:13px 12px;gap:8px;border-radius:12px}
+  .icon{width:38px;height:38px;border-radius:10px}
+  .icon .glyph{font-size:1.1rem}
+  .card h2{font-size:.92rem}
+  .card .en{font-size:.6rem}
+  .card p{font-size:.75rem}
+  .card .go{top:11px;left:12px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -203,7 +197,7 @@ footer a{color:var(--gold-deep);text-decoration:none}
 <div class="wrap">
   <header>
     <div class="brand">
-      <img class="emblem" src="https://eligrt.github.io/emblem.png" alt="">
+      <img class="emblem" src="emblem.png" alt="">
       <h1>LSA TOOLBOX</h1>
       <div class="tagline">Flight Utilities</div>
     </div>
@@ -220,18 +214,26 @@ footer a{color:var(--gold-deep);text-decoration:none}
   <p class="sec-label second" id="externalSection">External links</p>
   <main class="grid external" id="grid-ext"></main>
 
-  <footer>v1.32</footer>
+  <footer>v1.34</footer>
 </div>
 
 <script>
 const OWN = [
   {
-    title:"AirCheck",
+    title:"AirCheck+",
     en:"The checklist on top of the checklist",
     desc:"כל מה שלא נכנס לבד\"ח הרשמי, אבל חייבים להשלים לפני שממריאים (ואחרי שנוחתים...).",
     url:"https://eligrt.github.io/AirCheck/AirCheck_RD.html",
     icon:"https://eligrt.github.io/AirCheck/AirCheck_logo_RD.png",
     glyph:"✈", tag:"CHECKLIST"
+  },
+  {
+    title:"AirCheck POH",
+    en:"Pilot's Operating Handbook, on hand",
+    desc:"גרסת אונליין של הבדּ\"ח - זמינה ונגישה ב\"קליק\".",
+    url:"https://eligrt.github.io/AirCheck-POH/AirCheck_POH.html",
+    icon:"https://eligrt.github.io/AirCheck/AirCheck_logo_RD.png",
+    glyph:"📘", tag:"POH"
   },
   {
     title:"Weight & Balance",
@@ -253,21 +255,21 @@ const OWN = [
     en:"Purple routes · AZAM",
     desc:"הגשת תוכנית ל\"טיסת מרחב\" בנתיבי אז\"ם דרומית לבאר שבע באמצ\"ש (\"נתיב סגול\").",
     url:"https://eligrt.github.io/MERHAV_fpl/PURPLE_Routes_AZAM.html",
-    icon:"https://eligrt.github.io/merhav_icon.png", glyph:"🟣", tag:"FPL", fit:"contain"
+    icon:"merhav_icon.png", glyph:"🟣", tag:"FPL", fit:"contain"
   },
   {
     title:"METAR / TAF",
     en:"Weather Brief · decoder",
     desc:"דיווחי מזג אוויר (METAR) ותחזיות (TAF) לשדות בארץ ובחו\"ל (לפי קוד ICAO).",
     url:"https://eligrt.github.io/AirCheck/AirCheck_METAR.html",
-    icon:"https://eligrt.github.io/metar_icon.png", glyph:"🌦", tag:"WX", fit:"contain"
+    icon:"metar_icon.png", glyph:"🌦", tag:"WX", fit:"contain"
   },
   {
     title:"תדרוך נוסע",
     en:"Pre-flight passenger briefing",
     desc:"צ'קליסט לתדרוך נוסע לפני טיסה - בטיחות, תקשורת ונוחות.",
     url:"https://eligrt.github.io/AirCheck/passenger-briefing.html",
-    icon:"https://eligrt.github.io/briefing_icon.png", glyph:"📋", tag:"PAX", fit:"contain"
+    icon:"briefing_icon.png", glyph:"📋", tag:"PAX", fit:"contain"
   }
 ];
 
@@ -296,19 +298,18 @@ function cardHTML(t){
   const hasImg = t.icon && t.icon.length;
   return `
   <a class="card" href="${t.url}" target="_blank" rel="noopener">
+    <span class="go" aria-hidden="true">←</span>
     <div class="card-top">
       <span class="icon">
         ${hasImg?`<img class="${t.fit==='contain'?'contain':''}" src="${t.icon}" alt="" onerror="this.style.display='none';this.parentNode.querySelector('.glyph').style.display='block'">`:''}
         <span class="glyph"${hasImg?' style="display:none"':''}>${t.glyph||'✈'}</span>
       </span>
-      <span class="tag">${t.tag}</span>
+      <span class="card-head">
+        <h2 class="${/^[A-Za-z]/.test(t.title)?'ltr':''}">${t.title}</h2>
+        ${t.en?`<span class="en">${t.en}</span>`:''}
+      </span>
     </div>
-    <div class="card-body">
-      <h2>${t.title}</h2>
-      ${t.en?`<span class="en">${t.en}</span>`:''}
-      ${t.desc?`<p>${t.desc}</p>`:''}
-    </div>
-    <span class="go"><span class="arr">←</span> פתיחה</span>
+    ${t.desc?`<p>${t.desc}</p>`:''}
   </a>`;
 }
 
